@@ -1,0 +1,27 @@
+locale: "en-US"
+title: "Vision"
+description: "Static dedicated site for the Vision project"
+url: "https://lookatme.github.io"
+baseurl: ""
+repository: "sas-boson/lookatme"
+
+markdown: kramdown
+permalink: /:categories/:title/
+
+include:
+  - _pages
+  - files
+
+exclude:
+  - node_modules
+  - package-lock.json
+  - package.json
+  - tsconfig.json
+  - src
+
+defaults:
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: default

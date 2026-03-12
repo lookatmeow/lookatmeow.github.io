@@ -200,7 +200,7 @@ Custom prescription glasses and designer sunglasses delivered to your door in Co
 ### Contact Information
 - **Phone:** +57 300 123 4567
 - **Email:** info@visionlux.co
-- **Location:** Bogotá, Colombia
+- **Location:** Carrera 10#19-32 (Servision) Bogotá, Colombia
 
 ### Social Media
 - Facebook
