@@ -1,4 +1,4 @@
-const LIGHTNING_ADDRESS = 'visionlux@getalby.com';
+const LIGHTNING_ADDRESS = 'lookatme@getalby.com';
 const COP_PER_USD = 3850;
 const products = [
     {
@@ -22,7 +22,7 @@ const products = [
     {
         id: 3,
         name: { en: 'Modern Round', es: 'Redondo Moderno' },
-        brand: 'VisionLux',
+        brand: 'LookatMe',
         category: 'prescription',
         price: 280000,
         image: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=400&h=400&fit=crop',
@@ -40,7 +40,7 @@ const products = [
     {
         id: 5,
         name: { en: 'Executive Rectangular', es: 'Ejecutivo Rectangular' },
-        brand: 'VisionLux',
+        brand: 'LookatMe',
         category: 'prescription',
         price: 320000,
         image: 'https://images.unsplash.com/photo-1577803645773-f96470509666?w=400&h=400&fit=crop',
@@ -219,7 +219,7 @@ function addQuoteToCart() {
     const customItem = {
         id: `custom-${Date.now()}`,
         name: { en: `Custom Prescription - ${frameStyle}`, es: `Fórmula Personalizada - ${frameStyle}` },
-        brand: 'VisionLux Custom',
+        brand: 'LookatMe Custom',
         category: 'prescription',
         price,
         image: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=400&h=400&fit=crop',
@@ -345,7 +345,7 @@ async function handleMetaMaskPayment() {
         throw new Error('No account found.');
     const chainId = (await provider.request({ method: 'eth_chainId' }));
     const total = getCartTotal();
-    const message = `VisionLux purchase of ${formatCop(total)} COP`;
+    const message = `LookatMe purchase of ${formatCop(total)} COP`;
     try {
         await provider.request({ method: 'personal_sign', params: [message, account] });
     }
@@ -364,7 +364,7 @@ async function handleLightningPayment() {
     const webln = window.webln;
     if (webln) {
         await webln.enable();
-        const invoice = await webln.makeInvoice({ amount: sats, defaultMemo: 'VisionLux Order' });
+        const invoice = await webln.makeInvoice({ amount: sats, defaultMemo: 'LookatMe Order' });
         const paymentRequest = invoice.paymentRequest || invoice.pr;
         if (paymentRequest) {
             await copyToClipboard(paymentRequest);

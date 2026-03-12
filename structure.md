@@ -1,14 +1,14 @@
-# VisionLux - Premium Eyewear Website Structure
+# LookatMe - Premium Eyewear Website Structure
 
 ## Site Overview
-**Title:** VisionLux | Premium Eyewear in 48h | Gafas Premium en 48h
+**Title:** LookatMe | Premium Eyewear in 48h | Gafas Premium en 48h
 
 **Description:** Custom prescription glasses and designer sunglasses delivered to your door in Colombia within 48 hours. Pay with crypto or traditional methods.
 
 ---
 
 ## Navigation Bar
-- **Logo:** VisionLux (with glasses icon)
+- **Logo:** LookatMe (with glasses icon)
 - **Menu Items:**
   - Home / Inicio
   - Products / Productos
@@ -75,7 +75,7 @@ Custom prescription glasses and designer sunglasses delivered to your door in Co
 - **Description:** Classic aviator sunglasses
 
 #### Product 3: Modern Round
-- **Brand:** VisionLux
+- **Brand:** LookatMe
 - **Category:** Prescription
 - **Price:** $280,000 COP
 - **Description:** Trendy round frames for any prescription
@@ -87,7 +87,7 @@ Custom prescription glasses and designer sunglasses delivered to your door in Co
 - **Description:** High-performance sports sunglasses
 
 #### Product 5: Executive Rectangular
-- **Brand:** VisionLux
+- **Brand:** LookatMe
 - **Category:** Prescription
 - **Price:** $320,000 COP
 - **Description:** Professional look with blue light filter
@@ -161,7 +161,7 @@ Custom prescription glasses and designer sunglasses delivered to your door in Co
 ## About Section
 
 ### Header
-**Why VisionLux? / ¿Por Qué VisionLux?**
+**Why LookatMe? / ¿Por Qué LookatMe?**
 
 **Tagline:** We combine cutting-edge technology with traditional craftsmanship to deliver the perfect eyewear experience.
 
@@ -188,7 +188,7 @@ Custom prescription glasses and designer sunglasses delivered to your door in Co
 ## Footer
 
 ### Company Info
-- **Logo:** VisionLux
+- **Logo:** LookatMe
 - **Description:** Premium eyewear delivered in 48 hours across Colombia.
 
 ### Quick Links
@@ -199,7 +199,7 @@ Custom prescription glasses and designer sunglasses delivered to your door in Co
 
 ### Contact Information
 - **Phone:** +57 300 123 4567
-- **Email:** info@visionlux.co
+- **Email:** info@lookatme.co
 - **Location:** Carrera 10#19-32 (Servision) Bogotá, Colombia
 
 ### Social Media
@@ -208,7 +208,7 @@ Custom prescription glasses and designer sunglasses delivered to your door in Co
 - Twitter
 
 ### Copyright
-© 2025 VisionLux. All rights reserved. / Todos los derechos reservados.
+© 2025 LookatMe. All rights reserved. / Todos los derechos reservados.
 
 ---
 
