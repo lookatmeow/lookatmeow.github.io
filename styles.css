@@ -32,3 +32,25 @@ body {
 .cart-badge {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
+
+.brand-icon-gold {
+  color: #8b6508;
+  filter: drop-shadow(0 4px 10px rgba(139, 101, 8, 0.22));
+}
+
+.brand-text-gold {
+  background-image: linear-gradient(135deg, #b07a10 0%, #8b6508 38%, #c5921b 62%, #6e4f05 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 6px 18px rgba(110, 79, 5, 0.14);
+}
+
+.dark .brand-icon-gold {
+  color: #f1c75b;
+  filter: drop-shadow(0 6px 14px rgba(241, 199, 91, 0.22));
+}
+
+.dark .brand-text-gold {
+  background-image: linear-gradient(135deg, #fff7d0 0%, #f3cd67 35%, #ffe9a0 58%, #c79018 100%);
+}
