@@ -103,7 +103,8 @@ const products = [
 ];
 const state = {
     currentLang: 'en',
-    cart: []
+    cart: [],
+    quotePriceCop: 250000
 };
 document.addEventListener('DOMContentLoaded', () => {
     bindUI();
@@ -155,6 +156,7 @@ function toggleTheme() {
 function toggleLanguage() {
     state.currentLang = state.currentLang === 'en' ? 'es' : 'en';
     updateLanguage();
+    calculateQuote();
     const activeFilter = document.querySelector('.filter-btn.active')?.dataset.filter;
     renderProducts(activeFilter || 'all');
     updateCartUI();
@@ -192,7 +194,7 @@ function renderProducts(filter) {
             <h3 class="text-xl font-semibold mb-2">${product.name[state.currentLang]}</h3>
             <p class="text-gray-600 dark:text-gray-400 mb-4 text-sm">${product.description[state.currentLang]}</p>
             <div class="flex items-center justify-between">
-              <span class="text-2xl font-bold text-primary-500">$${product.price.toLocaleString()}</span>
+              <span class="text-2xl font-bold text-primary-500">${formatDisplayPrice(product.price)}</span>
               <button class="px-4 py-2 bg-gradient-to-r from-primary-500 to-purple-500 rounded-lg text-white smooth-transition hover:scale-105" data-add-to-cart="${product.id}">
                 <i class="fas fa-cart-plus mr-1"></i>
                 ${state.currentLang === 'en' ? 'Add' : 'Agregar'}
@@ -240,12 +242,10 @@ function calculateQuote() {
     });
     if (hasRx)
         basePrice += 50000;
+    state.quotePriceCop = basePrice;
     const priceElement = qs('#quotedPrice');
-    const priceUsdElement = qs('#quotedPriceUSD');
     if (priceElement)
-        priceElement.textContent = basePrice.toLocaleString();
-    if (priceUsdElement)
-        priceUsdElement.textContent = Math.round(basePrice / COP_PER_USD).toString();
+        priceElement.textContent = formatDisplayPrice(basePrice);
 }
 function addToCart(productId) {
     const product = products.find((p) => p.id === productId);
@@ -256,8 +256,7 @@ function addToCart(productId) {
     showNotification(state.currentLang === 'en' ? 'Added to cart!' : 'Agregado al carrito!');
 }
 function addQuoteToCart() {
-    const priceText = qs('#quotedPrice')?.textContent || '0';
-    const price = parseInt(priceText.replace(/,/g, ''), 10) || 0;
+    const price = state.quotePriceCop;
     const material = qs('#material')?.value || 'policarbonato';
     const filter = qs('#filter')?.value || 'none';
     const frameStyle = qs('#frameStyle')?.value || 'wayfarer';
@@ -297,7 +296,7 @@ function updateCartUI() {
         }
     }
     if (totalElement)
-        totalElement.textContent = total.toLocaleString();
+        totalElement.textContent = formatDisplayPrice(total);
     if (!cartItems)
         return;
     if (state.cart.length === 0) {
@@ -316,7 +315,7 @@ function updateCartUI() {
           <div class="flex-1">
             <h4 class="font-semibold">${item.name[state.currentLang]}</h4>
             <p class="text-sm text-gray-600 dark:text-gray-400">${item.brand}</p>
-            <p class="text-primary-500 font-semibold">$${item.price.toLocaleString()}</p>
+            <p class="text-primary-500 font-semibold">${formatDisplayPrice(item.price)}</p>
           </div>
           <button class="text-red-500 hover:text-red-700 smooth-transition" data-remove-index="${index}">
             <i class="fas fa-trash"></i>
@@ -467,6 +466,13 @@ function scrollToCustom() {
 }
 function formatCop(amount) {
     return `$${amount.toLocaleString()} COP`;
+}
+function formatDisplayPrice(copAmount) {
+    if (state.currentLang === 'en') {
+        const usd = Math.round(copAmount / COP_PER_USD);
+        return `$${usd.toLocaleString('en-US')} USD`;
+    }
+    return `$${Math.round(copAmount).toLocaleString('es-CO')} COP`;
 }
 function shorten(address) {
     if (address.length <= 10)

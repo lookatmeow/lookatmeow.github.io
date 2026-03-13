@@ -156,9 +156,10 @@ const products: Product[] = [
   }
 ];
 
-const state: { currentLang: Lang; cart: CartItem[] } = {
+const state: { currentLang: Lang; cart: CartItem[]; quotePriceCop: number } = {
   currentLang: 'en',
-  cart: []
+  cart: [],
+  quotePriceCop: 250000
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -218,6 +219,7 @@ function toggleTheme(): void {
 function toggleLanguage(): void {
   state.currentLang = state.currentLang === 'en' ? 'es' : 'en';
   updateLanguage();
+  calculateQuote();
   const activeFilter = (document.querySelector('.filter-btn.active') as HTMLButtonElement | null)?.dataset.filter as Product['category'] | 'all' | undefined;
   renderProducts(activeFilter || 'all');
   updateCartUI();
@@ -256,7 +258,7 @@ function renderProducts(filter: Product['category'] | 'all'): void {
             <h3 class="text-xl font-semibold mb-2">${product.name[state.currentLang]}</h3>
             <p class="text-gray-600 dark:text-gray-400 mb-4 text-sm">${product.description[state.currentLang]}</p>
             <div class="flex items-center justify-between">
-              <span class="text-2xl font-bold text-primary-500">$${product.price.toLocaleString()}</span>
+              <span class="text-2xl font-bold text-primary-500">${formatDisplayPrice(product.price)}</span>
               <button class="px-4 py-2 bg-gradient-to-r from-primary-500 to-purple-500 rounded-lg text-white smooth-transition hover:scale-105" data-add-to-cart="${product.id}">
                 <i class="fas fa-cart-plus mr-1"></i>
                 ${state.currentLang === 'en' ? 'Add' : 'Agregar'}
@@ -308,10 +310,10 @@ function calculateQuote(): void {
   });
   if (hasRx) basePrice += 50000;
 
+  state.quotePriceCop = basePrice;
+
   const priceElement = qs<HTMLElement>('#quotedPrice');
-  const priceUsdElement = qs<HTMLElement>('#quotedPriceUSD');
-  if (priceElement) priceElement.textContent = basePrice.toLocaleString();
-  if (priceUsdElement) priceUsdElement.textContent = Math.round(basePrice / COP_PER_USD).toString();
+  if (priceElement) priceElement.textContent = formatDisplayPrice(basePrice);
 }
 
 function addToCart(productId: number): void {
@@ -324,8 +326,7 @@ function addToCart(productId: number): void {
 }
 
 function addQuoteToCart(): void {
-  const priceText = qs<HTMLElement>('#quotedPrice')?.textContent || '0';
-  const price = parseInt(priceText.replace(/,/g, ''), 10) || 0;
+  const price = state.quotePriceCop;
   const material = qs<HTMLSelectElement>('#material')?.value || 'policarbonato';
   const filter = qs<HTMLSelectElement>('#filter')?.value || 'none';
   const frameStyle = qs<HTMLSelectElement>('#frameStyle')?.value || 'wayfarer';
@@ -370,7 +371,7 @@ function updateCartUI(): void {
     }
   }
 
-  if (totalElement) totalElement.textContent = total.toLocaleString();
+  if (totalElement) totalElement.textContent = formatDisplayPrice(total);
 
   if (!cartItems) return;
   if (state.cart.length === 0) {
@@ -391,7 +392,7 @@ function updateCartUI(): void {
           <div class="flex-1">
             <h4 class="font-semibold">${item.name[state.currentLang]}</h4>
             <p class="text-sm text-gray-600 dark:text-gray-400">${item.brand}</p>
-            <p class="text-primary-500 font-semibold">$${item.price.toLocaleString()}</p>
+            <p class="text-primary-500 font-semibold">${formatDisplayPrice(item.price)}</p>
           </div>
           <button class="text-red-500 hover:text-red-700 smooth-transition" data-remove-index="${index}">
             <i class="fas fa-trash"></i>
@@ -552,6 +553,15 @@ function scrollToCustom(): void {
 
 function formatCop(amount: number): string {
   return `$${amount.toLocaleString()} COP`;
+}
+
+function formatDisplayPrice(copAmount: number): string {
+  if (state.currentLang === 'en') {
+    const usd = Math.round(copAmount / COP_PER_USD);
+    return `$${usd.toLocaleString('en-US')} USD`;
+  }
+
+  return `$${Math.round(copAmount).toLocaleString('es-CO')} COP`;
 }
 
 function shorten(address: string): string {
