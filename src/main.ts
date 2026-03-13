@@ -6,7 +6,7 @@ interface Product {
   id: number | string;
   name: Record<Lang, string>;
   brand: string;
-  category: 'prescription' | 'sunglasses';
+  category: 'prescription' | 'sunglasses' | 'specialized';
   price: number;
   image: string;
   description: Record<Lang, string>;
@@ -57,7 +57,7 @@ const COP_PER_USD = 3850;
 const products: Product[] = [
   {
     id: 1,
-    name: { en: 'Classic Wayfarer', es: 'Wayfarer Clásico' },
+    name: { en: 'Classic Aviator', es: 'Aviador Clásico' },
     brand: 'Ray-Ban',
     category: 'prescription',
     price: 350000,
@@ -66,7 +66,7 @@ const products: Product[] = [
   },
   {
     id: 2,
-    name: { en: 'Aviator Gold', es: 'Aviador Dorado' },
+    name: { en: 'Wayfarer Black', es: 'Wayfarer Negro' },
     brand: 'Ray-Ban',
     category: 'sunglasses',
     price: 420000,
@@ -108,6 +108,51 @@ const products: Product[] = [
     price: 390000,
     image: 'https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?w=400&h=400&fit=crop',
     description: { en: 'Vintage-inspired cat eye sunglasses', es: 'Gafas de sol cat eye estilo vintage' }
+  },
+  {
+    id: 7,
+    name: { en: 'Welding Shield Pro', es: 'Escudo Soldadura Pro' },
+    brand: 'LookatMe Safety',
+    category: 'specialized',
+    price: 520000,
+    image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=400&h=400&fit=crop',
+    description: { en: 'Shade 5-8 filters for welding, foundry, and high-heat tasks', es: 'Filtros tono 5-8 para soldadura, fundición y trabajos de alta temperatura' }
+  },
+  {
+    id: 8,
+    name: { en: 'Torch & Glass-Blowing', es: 'Soplete y Soplado de Vidrio' },
+    brand: 'LookatMe Safety',
+    category: 'specialized',
+    price: 560000,
+    image: 'https://images.unsplash.com/photo-1582719478250-2f6140ef1c35?w=400&h=400&fit=crop',
+    description: { en: 'Didymium-style lenses to cut sodium flare and heat for torch work', es: 'Lentes tipo didimio que reducen destellos de sodio y calor en trabajo con soplete' }
+  },
+  {
+    id: 9,
+    name: { en: 'Polarized Marine Lab', es: 'Polarizadas Marino Lab' },
+    brand: 'Oakley Pro',
+    category: 'specialized',
+    price: 450000,
+    image: 'https://images.unsplash.com/photo-1511499767150-6a98e1e92b59?w=400&h=400&fit=crop',
+    description: { en: 'High-glare polarization for water, snow, and lab lights', es: 'Polarización alta para agua, nieve y luces de laboratorio' }
+  },
+  {
+    id: 10,
+    name: { en: 'Chemical Lab Goggles', es: 'Gafas de Laboratorio' },
+    brand: 'Bosons Lab',
+    category: 'specialized',
+    price: 280000,
+    image: 'https://images.unsplash.com/photo-1573497491208-6b1acb260507?w=400&h=400&fit=crop',
+    description: { en: 'Sealed splash protection with anti-fog and prescription inserts', es: 'Protección sellada contra salpicaduras con antiempañante y opción de insertos de fórmula' }
+  },
+  {
+    id: 11,
+    name: { en: 'Laser Defense L3', es: 'Defensa Láser L3' },
+    brand: 'LookatMe Pro',
+    category: 'specialized',
+    price: 690000,
+    image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop',
+    description: { en: 'OD-rated filters for lab lasers and medical devices', es: 'Filtros con densidad óptica para láseres de laboratorio y equipos médicos' }
   }
 ];
 
