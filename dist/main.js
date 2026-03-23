@@ -3,12 +3,12 @@ const COP_PER_USD = 3850;
 const products = [
     {
         id: 1,
-        name: { en: 'Classic Aviator', es: 'Aviador Clásico' },
+        name: { en: 'Classic Aviator', es: 'Aviador ClÃ¡sico' },
         brand: 'Ray-Ban',
         category: 'prescription',
         price: 350000,
         image: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=400&h=400&fit=crop',
-        description: { en: 'Iconic design with prescription lenses', es: 'Diseño icónico con lentes de fórmula' }
+        description: { en: 'Iconic design with prescription lenses', es: 'DiseÃ±o icÃ³nico con lentes de fÃ³rmula' }
     },
     {
         id: 2,
@@ -17,7 +17,7 @@ const products = [
         category: 'sunglasses',
         price: 420000,
         image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&h=400&fit=crop',
-        description: { en: 'Classic aviator sunglasses', es: 'Gafas de sol aviador clásicas' }
+        description: { en: 'Classic aviator sunglasses', es: 'Gafas de sol aviador clÃ¡sicas' }
     },
     {
         id: 3,
@@ -26,7 +26,7 @@ const products = [
         category: 'prescription',
         price: 280000,
         image: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=400&h=400&fit=crop',
-        description: { en: 'Trendy round frames for any prescription', es: 'Monturas redondas modernas para cualquier fórmula' }
+        description: { en: 'Trendy round frames for any prescription', es: 'Monturas redondas modernas para cualquier fÃ³rmula' }
     },
     {
         id: 4,
@@ -62,7 +62,7 @@ const products = [
         category: 'specialized',
         price: 520000,
         image: './assets/images/welder-using-s__11018.png',
-        description: { en: 'Shade 5-8 filters for welding, foundry, and high-heat tasks', es: 'Filtros tono 5-8 para soldadura, fundición y trabajos de alta temperatura' }
+        description: { en: 'Shade 5-8 filters for welding, foundry, and high-heat tasks', es: 'Filtros tono 5-8 para soldadura, fundiciÃ³n y trabajos de alta temperatura' }
     },
     {
         id: 8,
@@ -80,7 +80,7 @@ const products = [
       category: 'specialized',
       price: 450000,
       image: 'https://images.unsplash.com/photo-1511499767150-6a98e1e92b59?w=400&h=400&fit=crop',
-      description: { en: 'High-glare polarization for water, snow, and lab lights', es: 'Polarización alta para agua, nieve y luces de laboratorio' }
+      description: { en: 'High-glare polarization for water, snow, and lab lights', es: 'PolarizaciÃ³n alta para agua, nieve y luces de laboratorio' }
     }, */
     /* {
       id: 10,
@@ -89,18 +89,37 @@ const products = [
       category: 'specialized',
       price: 280000,
       image: 'https://images.unsplash.com/photo-1573497491208-6b1acb260507?w=400&h=400&fit=crop',
-      description: { en: 'Sealed splash protection with anti-fog and prescription inserts', es: 'Protección sellada contra salpicaduras con antiempañante y opción de insertos de fórmula' }
+      description: { en: 'Sealed splash protection with anti-fog and prescription inserts', es: 'ProtecciÃ³n sellada contra salpicaduras con antiempaÃ±ante y opciÃ³n de insertos de fÃ³rmula' }
     }, */
     {
         id: 11,
-        name: { en: 'Laser Defense L3', es: 'Defensa Láser L3' },
+        name: { en: 'Laser Defense L3', es: 'Defensa LÃ¡ser L3' },
         brand: 'LookatMe Pro',
         category: 'specialized',
         price: 690000,
         image: './assets/images/laser.jpg',
-        description: { en: 'OD-rated filters for lab lasers and medical devices', es: 'Filtros con densidad óptica para láseres de laboratorio y equipos médicos' }
+        description: { en: 'OD-rated filters for lab lasers and medical devices', es: 'Filtros con densidad Ã³ptica para lÃ¡seres de laboratorio y equipos mÃ©dicos' }
     }
 ];
+// Second images for products 1-4 (user-provided model shots)
+const productSlides = {
+    1: [
+        'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=400&h=400&fit=crop',
+        './assets/images/aviatormodel1.jpeg'
+    ],
+    2: [
+        'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&h=400&fit=crop',
+        './assets/images/warfarermodel1.jpeg'
+    ],
+    3: [
+        'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=400&h=400&fit=crop',
+        './assets/images/eyecatmodel1.jpeg'
+    ],
+    4: [
+        'https://images.unsplash.com/photo-1508296695146-257a814070b4?w=400&h=400&fit=crop',
+        './assets/images/waifarerprint1.jpeg'
+    ],
+};
 const state = {
     currentLang: 'en',
     cart: [],
@@ -182,13 +201,25 @@ function renderProducts(filter) {
         return;
     const filtered = filter === 'all' ? products : products.filter((p) => p.category === filter);
     grid.innerHTML = filtered
-        .map((product) => `
+        .map((product) => {
+        const slides = productSlides[product.id] ?? [product.image];
+        const hasSlides = slides.length > 1;
+        const slideImgs = slides
+            .map((src, idx) => `<img src="${src}" alt="${product.name[state.currentLang]}" class="product-slide w-full h-full object-cover${idx === 0 ? ' active' : ''}" loading="lazy">`)
+            .join('');
+        const dots = hasSlides
+            ? `<div class="product-dots">${slides.map((_, idx) => `<button class="product-dot${idx === 0 ? ' active' : ''}" data-slide="${idx}" aria-label="Image ${idx + 1}"></button>`).join('')}</div>`
+            : '';
+        const edges = hasSlides
+            ? `<div class="product-edge product-edge-left" data-edge="prev" aria-label="Prev"><span class="product-edge-icon"><i class="fas fa-chevron-left"></i></span></div><div class="product-edge product-edge-right" data-edge="next" aria-label="Next"><span class="product-edge-icon"><i class="fas fa-chevron-right"></i></span></div>`
+            : '';
+        return `
         <div class="glass-card rounded-2xl overflow-hidden smooth-transition hover-lift">
-          <div class="relative overflow-hidden h-64">
-            <img src="${product.image}" alt="${product.name[state.currentLang]}" class="w-full h-full object-cover smooth-transition hover:scale-110" loading="lazy">
-            <div class="absolute top-4 right-4 bg-primary-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
-              ${product.brand}
-            </div>
+          <div class="relative overflow-hidden h-64 product-slider-wrap">
+            <div class="product-slider">${slideImgs}</div>
+            <div class="absolute top-4 right-4 bg-primary-500 text-white px-3 py-1 rounded-full text-sm font-semibold z-10">${product.brand}</div>
+            ${edges}
+            ${dots}
           </div>
           <div class="p-6">
             <h3 class="text-xl font-semibold mb-2">${product.name[state.currentLang]}</h3>
@@ -202,12 +233,32 @@ function renderProducts(filter) {
             </div>
           </div>
         </div>
-      `)
+      `;
+    })
         .join('');
     grid.querySelectorAll('[data-add-to-cart]').forEach((btn) => {
         btn.addEventListener('click', () => {
             const id = Number(btn.dataset.addToCart);
             addToCart(id);
+        });
+    });
+    initProductSliders();
+}
+function initProductSliders() {
+    document.querySelectorAll('.product-slider-wrap').forEach((wrap) => {
+        const slides = wrap.querySelectorAll('.product-slide');
+        const dots = wrap.querySelectorAll('.product-dot');
+        let current = 0;
+        const goTo = (idx) => {
+            current = (idx + slides.length) % slides.length;
+            slides.forEach((s) => s.classList.remove('active'));
+            dots.forEach((d) => d.classList.remove('active'));
+            slides[current]?.classList.add('active');
+            dots[current]?.classList.add('active');
+        };
+        dots.forEach((dot, idx) => dot.addEventListener('click', () => goTo(idx)));
+        wrap.querySelectorAll('[data-edge]').forEach((edge) => {
+            edge.addEventListener('click', () => goTo(edge.dataset.edge === 'prev' ? current - 1 : current + 1));
         });
     });
 }
@@ -262,7 +313,7 @@ function addQuoteToCart() {
     const frameStyle = qs('#frameStyle')?.value || 'wayfarer';
     const customItem = {
         id: `custom-${Date.now()}`,
-        name: { en: `Custom Prescription - ${frameStyle}`, es: `Fórmula Personalizada - ${frameStyle}` },
+        name: { en: `Custom Prescription - ${frameStyle}`, es: `FÃ³rmula Personalizada - ${frameStyle}` },
         brand: 'LookatMe Custom',
         category: 'prescription',
         price,
@@ -272,7 +323,7 @@ function addQuoteToCart() {
     };
     state.cart.push(customItem);
     updateCartUI();
-    showNotification(state.currentLang === 'en' ? 'Custom quote added to cart!' : 'Cotización personalizada agregada!');
+    showNotification(state.currentLang === 'en' ? 'Custom quote added to cart!' : 'CotizaciÃ³n personalizada agregada!');
 }
 function removeFromCart(index) {
     state.cart.splice(index, 1);
@@ -303,7 +354,7 @@ function updateCartUI() {
         cartItems.innerHTML = `
       <div class="text-center py-12 text-gray-500">
         <i class="fas fa-shopping-cart text-6xl mb-4 opacity-50"></i>
-        <p>${state.currentLang === 'en' ? 'Your cart is empty' : 'Tu carrito está vacío'}</p>
+        <p>${state.currentLang === 'en' ? 'Your cart is empty' : 'Tu carrito estÃ¡ vacÃ­o'}</p>
       </div>
     `;
         return;
@@ -340,7 +391,7 @@ function closeCart() {
 }
 function openPaymentModal() {
     if (state.cart.length === 0) {
-        showNotification(state.currentLang === 'en' ? 'Your cart is empty!' : 'Tu carrito está vacío!');
+        showNotification(state.currentLang === 'en' ? 'Your cart is empty!' : 'Tu carrito estÃ¡ vacÃ­o!');
         return;
     }
     closeCart();
@@ -381,7 +432,7 @@ async function selectPayment(method) {
 async function handleMetaMaskPayment() {
     const provider = window.ethereum;
     if (!provider) {
-        throw new Error(state.currentLang === 'en' ? 'MetaMask not detected.' : 'MetaMask no está disponible.');
+        throw new Error(state.currentLang === 'en' ? 'MetaMask not detected.' : 'MetaMask no estÃ¡ disponible.');
     }
     const accounts = (await provider.request({ method: 'eth_requestAccounts' }));
     const account = accounts[0];
@@ -423,7 +474,7 @@ async function handleLightningPayment() {
     else {
         const lightningUrl = `lightning:${LIGHTNING_ADDRESS}`;
         await copyToClipboard(lightningUrl);
-        showNotification(state.currentLang === 'en' ? 'Lightning address copied. Pay from your wallet.' : 'Dirección Lightning copiada. Paga desde tu wallet.');
+        showNotification(state.currentLang === 'en' ? 'Lightning address copied. Pay from your wallet.' : 'DirecciÃ³n Lightning copiada. Paga desde tu wallet.');
     }
 }
 async function convertCopToSats(copAmount) {

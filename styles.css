@@ -54,3 +54,84 @@ body {
 .dark .brand-text-gold {
   background-image: linear-gradient(135deg, #fff7d0 0%, #f3cd67 35%, #ffe9a0 58%, #c79018 100%);
 }
+
+/* Product image slider */
+.product-slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.product-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.product-slide.active {
+  opacity: 1;
+}
+
+.product-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  z-index: 10;
+}
+
+.product-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(30, 30, 40, 0.45);
+  border: 1.5px solid rgba(30, 30, 40, 0.75);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.product-dot.active {
+  background: #1e1e28;
+  transform: scale(1.35);
+}
+
+/* Edge-tap navigation arrows */
+.product-edge {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 28%;
+  z-index: 9;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.product-edge-left  { left:  0; justify-content: flex-start; padding-left:  8px; }
+.product-edge-right { right: 0; justify-content: flex-end;   padding-right: 8px; }
+
+.product-slider-wrap:hover .product-edge { opacity: 1; }
+
+.product-edge-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(20, 20, 30, 0.55);
+  border: 1.5px solid rgba(255,255,255,0.3);
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 0.7rem;
+  pointer-events: none;
+  backdrop-filter: blur(4px);
+}
