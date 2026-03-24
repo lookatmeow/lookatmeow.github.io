@@ -66,7 +66,7 @@ const products = [
     },
     {
         id: 7,
-        name: { en: 'Welding Shield Pro', es: 'Escudo Soldadura Pro' },
+        name: { en: 'Welding Shield', es: 'Gafas para Soldadura ' },
         brand: 'LookatMe Safety',
         category: 'specialized',
         price: 520000,
@@ -75,7 +75,7 @@ const products = [
     },
     {
         id: 8,
-        name: { en: 'Torch & Glass-Blowing', es: 'Soplete y Soplado de Vidrio' },
+        name: { en: 'Torch & Glass-Blowing', es: 'Fundicion y Soplado de Vidrio' },
         brand: 'LookatMe Safety',
         category: 'specialized',
         price: 560000,
@@ -84,7 +84,7 @@ const products = [
     },
     {
         id: 11,
-        name: { en: 'Laser Defense L3', es: 'Defensa Laser L3' },
+        name: { en: 'Laser Protection L3', es: 'Laboratorios Laser L3' },
         brand: 'LookatMe Pro',
         category: 'specialized',
         price: 690000,
@@ -92,6 +92,24 @@ const products = [
         description: { en: 'OD-rated filters for lab lasers and medical devices', es: 'Filtros con densidad optica para laseres de laboratorio y equipos medicos' }
     }
 ];
+const productSlides = {
+    1: [
+        'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=400&h=400&fit=crop',
+        './assets/images/aviatormodel1.jpeg'
+    ],
+    2: [
+        'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&h=400&fit=crop',
+        './assets/images/warfarermodel1.jpeg'
+    ],
+    3: [
+        'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=400&h=400&fit=crop',
+        './assets/images/waifarerprint1.jpeg'
+    ],
+    4: [
+        'https://images.unsplash.com/photo-1508296695146-257a814070b4?w=400&h=400&fit=crop',
+        './assets/images/eyecatmodel1.jpeg'
+    ]
+};
 const state = {
     currentLang: 'es',
     cart: [],
@@ -221,13 +239,28 @@ function renderProducts(filter) {
         return;
     const filtered = filter === 'all' ? products : products.filter((p) => p.category === filter);
     grid.innerHTML = filtered
-        .map((product) => `
+        .map((product) => {
+        const numericId = typeof product.id === 'number' ? product.id : Number(product.id);
+        const slides = Number.isFinite(numericId) ? (productSlides[numericId] ?? [product.image]) : [product.image];
+        const hasSlides = slides.length > 1;
+        const slideImgs = slides
+            .map((src, idx) => `<img src="${src}" alt="${product.name[state.currentLang]}" class="product-slide w-full h-full object-cover${idx === 0 ? ' active' : ''}" loading="lazy">`)
+            .join('');
+        const dots = hasSlides
+            ? `<div class="product-dots">${slides.map((_, idx) => `<button class="product-dot${idx === 0 ? ' active' : ''}" data-slide="${idx}" aria-label="Image ${idx + 1}"></button>`).join('')}</div>`
+            : '';
+        const edges = hasSlides
+            ? `<div class="product-edge product-edge-left" data-edge="prev" aria-label="Prev"><span class="product-edge-icon"><i class="fas fa-chevron-left"></i></span></div><div class="product-edge product-edge-right" data-edge="next" aria-label="Next"><span class="product-edge-icon"><i class="fas fa-chevron-right"></i></span></div>`
+            : '';
+        return `
         <div class="glass-card rounded-2xl overflow-hidden smooth-transition hover-lift">
-          <div class="relative overflow-hidden h-64">
-            <img src="${product.image}" alt="${product.name[state.currentLang]}" class="w-full h-full object-cover smooth-transition hover:scale-110" loading="lazy">
-            <div class="absolute top-4 right-4 bg-primary-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+          <div class="relative overflow-hidden h-64 product-slider-wrap">
+            <div class="product-slider">${slideImgs}</div>
+            <div class="absolute top-4 right-4 bg-primary-500 text-white px-3 py-1 rounded-full text-sm font-semibold z-10">
               ${product.brand}
             </div>
+            ${edges}
+            ${dots}
           </div>
           <div class="p-6">
             <h3 class="text-xl font-semibold mb-2">${product.name[state.currentLang]}</h3>
@@ -241,12 +274,36 @@ function renderProducts(filter) {
             </div>
           </div>
         </div>
-      `)
+      `;
+    })
         .join('');
     grid.querySelectorAll('[data-add-to-cart]').forEach((btn) => {
         btn.addEventListener('click', () => {
             const id = Number(btn.dataset.addToCart);
             addToCart(id);
+        });
+    });
+    initProductSliders();
+}
+function initProductSliders() {
+    document.querySelectorAll('.product-slider-wrap').forEach((wrap) => {
+        const slides = wrap.querySelectorAll('.product-slide');
+        const dots = wrap.querySelectorAll('.product-dot');
+        let current = 0;
+        const goTo = (idx) => {
+            if (slides.length === 0)
+                return;
+            current = (idx + slides.length) % slides.length;
+            slides.forEach((slide) => slide.classList.remove('active'));
+            dots.forEach((dot) => dot.classList.remove('active'));
+            slides[current]?.classList.add('active');
+            dots[current]?.classList.add('active');
+        };
+        dots.forEach((dot, idx) => dot.addEventListener('click', () => goTo(idx)));
+        wrap.querySelectorAll('[data-edge]').forEach((edge) => {
+            edge.addEventListener('click', () => {
+                goTo(edge.dataset.edge === 'prev' ? current - 1 : current + 1);
+            });
         });
     });
 }
