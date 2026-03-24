@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LookatMe | Login/Register</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif']
+          },
+          colors: {
+            primary: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e'
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-black text-gray-900 dark:text-white transition-colors duration-300 min-h-screen">
+  <div class="fixed inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute top-20 -left-20 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-20 animate-float"></div>
+    <div class="absolute top-40 right-20 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-20 animate-float" style="animation-delay: 2s;"></div>
+  </div>
+
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-card">
+    <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+      <a href="./index.html" class="flex items-center space-x-3">
+        <i class="fas fa-glasses text-3xl brand-icon-gold"></i>
+        <span class="text-2xl font-bold bg-gradient-to-r from-primary-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">LookatMe</span>
+      </a>
+      <div class="flex items-center gap-3">
+        <a href="./index.html" class="px-3 py-2 rounded-lg glass-card smooth-transition hover:bg-primary-500 hover:text-white text-sm" data-en="Back Home" data-es="Volver al Inicio">Back Home</a>
+        <button id="langToggle" class="px-3 py-1 rounded-lg glass-card smooth-transition hover:bg-primary-500 hover:text-white text-sm font-semibold">EN / ES</button>
+        <button id="themeToggle" class="p-2 rounded-lg glass-card smooth-transition hover:bg-primary-500 hover:text-white">
+          <i class="fas fa-moon dark:hidden"></i>
+          <i class="fas fa-sun hidden dark:inline"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="pt-28 pb-16 px-4">
+    <section class="max-w-5xl mx-auto">
+      <div class="text-center mb-10">
+        <p class="text-sm uppercase tracking-[0.3em] text-primary-500 font-semibold" data-en="Customer Zone" data-es="Zona de Cliente">Customer Zone</p>
+        <h1 class="text-4xl md:text-5xl font-bold mb-3">
+          <span class="bg-gradient-to-r from-primary-500 via-purple-500 to-pink-500 bg-clip-text text-transparent" data-en="Login / Register" data-es="Login / Registro">Login / Register</span>
+        </h1>
+        <p class="text-gray-600 dark:text-gray-400 max-w-3xl mx-auto" data-en="Use your email provider to create your account and continue to your private profile dashboard." data-es="Usa tu correo para crear tu cuenta y continuar a tu panel privado de perfil.">Use your email provider to create your account and continue to your private profile dashboard.</p>
+      </div>
+
+      <div id="authGuestPanel" class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start glass-card rounded-3xl p-6 md:p-10">
+        <div class="space-y-4">
+          <h2 class="text-3xl font-bold" data-en="Email Access" data-es="Acceso por Correo">Email Access</h2>
+          <p class="text-gray-600 dark:text-gray-400" data-en="Supports Gmail, Yahoo, Outlook, and any valid email domain." data-es="Compatible con Gmail, Yahoo, Outlook y cualquier dominio de correo valido.">Supports Gmail, Yahoo, Outlook, and any valid email domain.</p>
+          <div class="grid grid-cols-3 gap-3 text-sm">
+            <div class="glass-card rounded-xl px-3 py-2 text-center">gmail.com</div>
+            <div class="glass-card rounded-xl px-3 py-2 text-center">yahoo.com</div>
+            <div class="glass-card rounded-xl px-3 py-2 text-center">outlook.com</div>
+          </div>
+        </div>
+
+        <form id="authForm" class="glass-card rounded-2xl p-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 id="authTitle" class="text-2xl font-semibold" data-en="Create account" data-es="Crear cuenta">Create account</h3>
+            <button type="button" id="authModeToggle" class="text-sm text-primary-500 hover:text-primary-400 smooth-transition" data-en="Already have account? Sign in" data-es="Ya tienes cuenta? Inicia sesion">Already have account? Sign in</button>
+          </div>
+
+          <div id="authNameWrap">
+            <label for="authName" class="block text-sm mb-1" data-en="Full name" data-es="Nombre completo">Full name</label>
+            <input id="authName" type="text" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-gray-300 dark:border-gray-700 focus:border-primary-500 focus:outline-none smooth-transition" placeholder="Jane Doe" />
+          </div>
+
+          <div>
+            <label for="authEmail" class="block text-sm mb-1">Email</label>
+            <input id="authEmail" type="email" autocomplete="email" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-gray-300 dark:border-gray-700 focus:border-primary-500 focus:outline-none smooth-transition" placeholder="name@gmail.com" required />
+          </div>
+
+          <div>
+            <label for="authPassword" class="block text-sm mb-1" data-en="Password" data-es="Contrasena">Password</label>
+            <input id="authPassword" type="password" autocomplete="current-password" minlength="8" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-gray-300 dark:border-gray-700 focus:border-primary-500 focus:outline-none smooth-transition" required />
+          </div>
+
+          <div id="authConfirmWrap">
+            <label for="authConfirmPassword" class="block text-sm mb-1" data-en="Confirm password" data-es="Confirmar contrasena">Confirm password</label>
+            <input id="authConfirmPassword" type="password" autocomplete="new-password" minlength="8" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-gray-300 dark:border-gray-700 focus:border-primary-500 focus:outline-none smooth-transition" />
+          </div>
+
+          <label id="authNewsletterWrap" class="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-400">
+            <input id="authNewsletter" type="checkbox" class="mt-1 w-4 h-4 rounded border-gray-300 text-primary-500 focus:ring-primary-500" />
+            <span data-en="Join our newsletter for offers, lens care tips, and launch drops." data-es="Unete al boletin para ofertas, tips de cuidado y lanzamientos.">Join our newsletter for offers, lens care tips, and launch drops.</span>
+          </label>
+
+          <button id="authSubmitBtn" type="submit" class="w-full px-6 py-3 bg-gradient-to-r from-primary-500 to-purple-500 rounded-xl font-semibold text-white smooth-transition hover:scale-105">
+            <span data-en="Create my account" data-es="Crear mi cuenta">Create my account</span>
+          </button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="./dist/main.js"></script>
+</body>
+</html>
