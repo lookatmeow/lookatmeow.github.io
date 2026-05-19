@@ -168,9 +168,8 @@ function bindUI() {
     qs('#prefsForm')?.addEventListener('submit', handlePreferencesSave);
 }
 function initTheme() {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const stored = localStorage.getItem('theme');
-    const shouldUseDark = stored === 'dark' || (!stored && prefersDark);
+    const shouldUseDark = stored === 'dark';
     if (shouldUseDark) {
         document.documentElement.classList.add('dark');
     }
