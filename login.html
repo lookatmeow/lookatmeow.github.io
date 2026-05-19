@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LookatMe | Login/Register</title>
+  <title>FAN Opticas | Login/Register</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -44,28 +44,56 @@
   </div>
 
   <nav class="fixed top-0 left-0 right-0 z-50 glass-card">
-    <div class="container mx-auto px-4 py-4 flex items-center justify-between">
-      <a href="./index.html" class="flex items-center space-x-3">
-        <i class="fas fa-glasses text-3xl brand-icon-gold"></i>
-        <span class="text-2xl font-bold bg-gradient-to-r from-primary-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">LookatMe</span>
-      </a>
-      <div class="flex items-center gap-3">
-        <a href="./index.html" class="px-3 py-2 rounded-lg glass-card smooth-transition hover:bg-primary-500 hover:text-white text-sm" data-en="Back Home" data-es="Volver al Inicio">Back Home</a>
-        <button id="langToggle" class="px-3 py-1 rounded-lg glass-card smooth-transition hover:bg-primary-500 hover:text-white text-sm font-semibold">EN / ES</button>
-        <button id="themeToggle" class="p-2 rounded-lg glass-card smooth-transition hover:bg-primary-500 hover:text-white">
-          <i class="fas fa-moon dark:hidden"></i>
-          <i class="fas fa-sun hidden dark:inline"></i>
-        </button>
+    <div class="container mx-auto px-4 py-4">
+      <div class="flex items-center justify-between">
+        <a href="./index.html" class="flex items-center space-x-3">
+          <img src="./assets/images/logo.png" alt="FAN Opticas logo" class="mt-1 h-9 w-auto shrink-0 object-contain" loading="eager" />
+          <span class="text-2xl font-bold bg-gradient-to-r from-primary-500 via-lime-700 to-green-700 bg-clip-text text-transparent">FAN Opticas</span>
+        </a>
+        
+        <div class="flex items-center space-x-3">
+          <button id="langToggle" class="px-3 py-1 rounded-lg glass-card smooth-transition hover:bg-primary-500 hover:text-white text-sm font-semibold">EN / ES</button>
+          <button id="themeToggle" class="p-2 rounded-lg glass-card smooth-transition hover:bg-primary-500 hover:text-white">
+            <i class="fas fa-moon dark:hidden"></i>
+            <i class="fas fa-sun hidden dark:inline"></i>
+          </button>
+          <button id="navMenuToggle" class="p-2 rounded-lg glass-card smooth-transition hover:bg-primary-500 hover:text-white">
+            <i class="fas fa-bars text-xl"></i>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Dropdown Menu -->
+      <div id="navMenu" class="hidden mt-4 pt-4 border-t border-gray-300 dark:border-gray-700">
+        <div class="flex flex-col space-y-3">
+          <a href="./index.html" class="smooth-transition hover:text-primary-500 py-2" data-en="Back Home" data-es="Volver al Inicio">Back Home</a>
+          <a href="./profile.html" class="smooth-transition hover:text-primary-500 py-2" data-en="My Profile" data-es="Mi Perfil">My Profile</a>
+        </div>
       </div>
     </div>
   </nav>
+  
+  <!-- Navigation Menu Toggle Script -->
+  <script>
+    document.getElementById('navMenuToggle').addEventListener('click', function() {
+      const menu = document.getElementById('navMenu');
+      menu.classList.toggle('hidden');
+    });
+    
+    // Close menu when a link is clicked
+    document.querySelectorAll('#navMenu a').forEach(link => {
+      link.addEventListener('click', function() {
+        document.getElementById('navMenu').classList.add('hidden');
+      });
+    });
+  </script>
 
   <main class="pt-28 pb-16 px-4">
     <section class="max-w-5xl mx-auto">
       <div class="text-center mb-10">
         <p class="text-sm uppercase tracking-[0.3em] text-primary-500 font-semibold" data-en="Customer Zone" data-es="Zona de Cliente">Customer Zone</p>
         <h1 class="text-4xl md:text-5xl font-bold mb-3">
-          <span class="bg-gradient-to-r from-primary-500 via-purple-500 to-pink-500 bg-clip-text text-transparent" data-en="Login / Register" data-es="Login / Registro">Login / Register</span>
+          <span class="bg-gradient-to-r from-primary-500 via-lime-700 to-green-700 bg-clip-text text-transparent" data-en="Login / Register" data-es="Login / Registro">Login / Register</span>
         </h1>
         <p class="text-gray-600 dark:text-gray-400 max-w-3xl mx-auto" data-en="Use your email provider to create your account and continue to your private profile dashboard." data-es="Usa tu correo para crear tu cuenta y continuar a tu panel privado de perfil.">Use your email provider to create your account and continue to your private profile dashboard.</p>
       </div>
@@ -112,7 +140,7 @@
             <span data-en="Join our newsletter for offers, lens care tips, and launch drops." data-es="Unete al boletin para ofertas, tips de cuidado y lanzamientos.">Join our newsletter for offers, lens care tips, and launch drops.</span>
           </label>
 
-          <button id="authSubmitBtn" type="submit" class="w-full px-6 py-3 bg-gradient-to-r from-primary-500 to-purple-500 rounded-xl font-semibold text-white smooth-transition hover:scale-105">
+          <button id="authSubmitBtn" type="submit" class="w-full px-6 py-3 bg-gradient-to-r from-primary-500 via-lime-700 to-green-700 rounded-xl font-semibold text-white smooth-transition hover:scale-105">
             <span data-en="Create my account" data-es="Crear mi cuenta">Create my account</span>
           </button>
         </form>

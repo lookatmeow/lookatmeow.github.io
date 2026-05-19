@@ -1,7 +1,7 @@
 const LIGHTNING_ADDRESS = 'lookatme@getalby.com';
 const COP_PER_USD = 3850;
-const USERS_STORAGE_KEY = 'lookatme_users_v1';
-const SESSION_STORAGE_KEY = 'lookatme_session_email_v1';
+const USERS_STORAGE_KEY = 'fan_opticas_users_v1';
+const SESSION_STORAGE_KEY = 'fan_opticas_session_email_v1';
 const CURRENT_PAGE = window.location.pathname.split('/').pop()?.toLowerCase() || 'index.html';
 function isLoginPage() {
     return CURRENT_PAGE === 'login.html';
@@ -31,7 +31,7 @@ const products = [
     {
         id: 3,
         name: { en: 'Modern Round', es: 'Redondo Moderno' },
-        brand: 'LookatMe',
+        brand: 'FAN Opticas',
         category: 'prescription',
         price: 280000,
         image: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=400&h=400&fit=crop',
@@ -49,7 +49,7 @@ const products = [
     {
         id: 5,
         name: { en: 'Executive Rectangular', es: 'Ejecutivo Rectangular' },
-        brand: 'LookatMe',
+        brand: 'FAN Opticas',
         category: 'prescription',
         price: 320000,
         image: 'https://images.unsplash.com/photo-1577803645773-f96470509666?w=400&h=400&fit=crop',
@@ -66,8 +66,8 @@ const products = [
     },
     {
         id: 7,
-        name: { en: 'Welding Shield', es: 'Gafas para Soldadura ' },
-        brand: 'LookatMe Safety',
+        name: { en: 'Welding Shield Pro', es: 'Escudo Soldadura Pro' },
+        brand: 'FAN Opticas Safety',
         category: 'specialized',
         price: 520000,
         image: './assets/images/welder-using-s__11018.png',
@@ -75,8 +75,8 @@ const products = [
     },
     {
         id: 8,
-        name: { en: 'Torch & Glass-Blowing', es: 'Fundicion y Soplado de Vidrio' },
-        brand: 'LookatMe Safety',
+        name: { en: 'Torch & Glass-Blowing', es: 'Soplete y Soplado de Vidrio' },
+        brand: 'FAN Opticas Safety',
         category: 'specialized',
         price: 560000,
         image: './assets/images/glassblowing.png',
@@ -84,8 +84,8 @@ const products = [
     },
     {
         id: 11,
-        name: { en: 'Laser Protection L3', es: 'Laboratorios Laser L3' },
-        brand: 'LookatMe Pro',
+        name: { en: 'Laser Defense L3', es: 'Defensa Laser L3' },
+        brand: 'FAN Opticas Pro',
         category: 'specialized',
         price: 690000,
         image: './assets/images/laser.jpg',
@@ -103,11 +103,11 @@ const productSlides = {
     ],
     3: [
         'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=400&h=400&fit=crop',
-        './assets/images/waifarerprint1.jpeg'
+        './assets/images/eyecatmodel1.jpeg'
     ],
     4: [
         'https://images.unsplash.com/photo-1508296695146-257a814070b4?w=400&h=400&fit=crop',
-        './assets/images/eyecatmodel1.jpeg'
+        './assets/images/waifarerprint1.jpeg'
     ]
 };
 const state = {
@@ -267,7 +267,7 @@ function renderProducts(filter) {
             <p class="text-gray-600 dark:text-gray-400 mb-4 text-sm">${product.description[state.currentLang]}</p>
             <div class="flex items-center justify-between">
               <span class="text-2xl font-bold text-primary-500">${formatDisplayPrice(product.price)}</span>
-              <button class="px-4 py-2 bg-gradient-to-r from-primary-500 to-purple-500 rounded-lg text-white smooth-transition hover:scale-105" data-add-to-cart="${product.id}">
+              <button class="px-4 py-2 bg-gradient-to-r from-primary-700 via-lime-700 to-green-700 rounded-lg text-white smooth-transition hover:scale-105" data-add-to-cart="${product.id}">
                 <i class="fas fa-cart-plus mr-1"></i>
                 ${state.currentLang === 'en' ? 'Add' : 'Agregar'}
               </button>
@@ -359,7 +359,7 @@ function addQuoteToCart() {
     const customItem = {
         id: `custom-${Date.now()}`,
         name: { en: `Custom Prescription - ${frameStyle}`, es: `Formula Personalizada - ${frameStyle}` },
-        brand: 'LookatMe Custom',
+        brand: 'FAN Opticas Custom',
         category: 'prescription',
         price,
         image: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=400&h=400&fit=crop',
@@ -486,7 +486,7 @@ async function handleMetaMaskPayment() {
         throw new Error('No account found.');
     const chainId = (await provider.request({ method: 'eth_chainId' }));
     const total = getCartTotal();
-    const message = `LookatMe purchase of ${formatCop(total)} COP`;
+    const message = `FAN Opticas purchase of ${formatCop(total)} COP`;
     try {
         await provider.request({ method: 'personal_sign', params: [message, account] });
     }
@@ -505,7 +505,7 @@ async function handleLightningPayment() {
     const webln = window.webln;
     if (webln) {
         await webln.enable();
-        const invoice = await webln.makeInvoice({ amount: sats, defaultMemo: 'LookatMe Order' });
+        const invoice = await webln.makeInvoice({ amount: sats, defaultMemo: 'FAN Opticas Order' });
         const paymentRequest = invoice.paymentRequest || invoice.pr;
         if (paymentRequest) {
             await copyToClipboard(paymentRequest);
@@ -520,7 +520,7 @@ async function handleLightningPayment() {
     else {
         const lightningUrl = `lightning:${LIGHTNING_ADDRESS}`;
         await copyToClipboard(lightningUrl);
-        showNotification(state.currentLang === 'en' ? 'Lightning address copied. Pay from your wallet.' : 'Direccion Lightning copiada. Paga desde tu wallet.');
+        showNotification(state.currentLang === 'en' ? 'Lightning address copied. Pay from your walet.' : 'Direccion Lightning copiada. Paga desde tu wallet.');
     }
 }
 function finalizeCheckout() {
@@ -684,7 +684,7 @@ function renderAccountUI() {
     const greeting = qs('#accountGreeting');
     const email = qs('#accountEmail');
     if (greeting)
-        greeting.textContent = state.currentUser.profile.fullName || 'LookatMe User';
+        greeting.textContent = state.currentUser.profile.fullName || 'FAN Opticas User';
     if (email)
         email.textContent = state.currentUser.email;
     fillProfileForm();

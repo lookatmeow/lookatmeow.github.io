@@ -69,7 +69,7 @@ declare global {
     closePayment: () => void;
     openCart: () => void;
     openPaymentModal: () => void;
-    removeFromCart: (index: number) => void;
+    removeFromCart: (inex: number) => void;
     scrollToCustom: () => void;
     scrollToProducts: () => void;
     selectPayment: (method: PaymentMethod) => void;
@@ -80,8 +80,8 @@ declare global {
 
 const LIGHTNING_ADDRESS = 'lookatme@getalby.com';
 const COP_PER_USD = 3850;
-const USERS_STORAGE_KEY = 'lookatme_users_v1';
-const SESSION_STORAGE_KEY = 'lookatme_session_email_v1';
+const USERS_STORAGE_KEY = 'fan_opticas_users_v1';
+const SESSION_STORAGE_KEY = 'fan_opticas_session_email_v1';
 const CURRENT_PAGE = window.location.pathname.split('/').pop()?.toLowerCase() || 'index.html';
 
 function isLoginPage(): boolean {
@@ -114,7 +114,7 @@ const products: Product[] = [
   {
     id: 3,
     name: { en: 'Modern Round', es: 'Redondo Moderno' },
-    brand: 'LookatMe',
+    brand: 'FAN Opticas',
     category: 'prescription',
     price: 280000,
     image: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=400&h=400&fit=crop',
@@ -132,7 +132,7 @@ const products: Product[] = [
   {
     id: 5,
     name: { en: 'Executive Rectangular', es: 'Ejecutivo Rectangular' },
-    brand: 'LookatMe',
+    brand: 'FAN Opticas',
     category: 'prescription',
     price: 320000,
     image: 'https://images.unsplash.com/photo-1577803645773-f96470509666?w=400&h=400&fit=crop',
@@ -150,7 +150,7 @@ const products: Product[] = [
   {
     id: 7,
     name: { en: 'Welding Shield Pro', es: 'Escudo Soldadura Pro' },
-    brand: 'LookatMe Safety',
+    brand: 'FAN Opticas Safety',
     category: 'specialized',
     price: 520000,
     image: './assets/images/welder-using-s__11018.png',
@@ -159,7 +159,7 @@ const products: Product[] = [
   {
     id: 8,
     name: { en: 'Torch & Glass-Blowing', es: 'Soplete y Soplado de Vidrio' },
-    brand: 'LookatMe Safety',
+    brand: 'FAN Opticas Safety',
     category: 'specialized',
     price: 560000,
     image: './assets/images/glassblowing.png',
@@ -168,7 +168,7 @@ const products: Product[] = [
   {
     id: 11,
     name: { en: 'Laser Defense L3', es: 'Defensa Laser L3' },
-    brand: 'LookatMe Pro',
+    brand: 'FAN Opticas Pro',
     category: 'specialized',
     price: 690000,
     image: './assets/images/laser.jpg',
@@ -378,7 +378,7 @@ function renderProducts(filter: Product['category'] | 'all'): void {
             <p class="text-gray-600 dark:text-gray-400 mb-4 text-sm">${product.description[state.currentLang]}</p>
             <div class="flex items-center justify-between">
               <span class="text-2xl font-bold text-primary-500">${formatDisplayPrice(product.price)}</span>
-              <button class="px-4 py-2 bg-gradient-to-r from-primary-500 to-purple-500 rounded-lg text-white smooth-transition hover:scale-105" data-add-to-cart="${product.id}">
+              <button class="px-4 py-2 bg-gradient-to-r from-primary-700 via-lime-700 to-green-700 rounded-lg text-white smooth-transition hover:scale-105" data-add-to-cart="${product.id}">
                 <i class="fas fa-cart-plus mr-1"></i>
                 ${state.currentLang === 'en' ? 'Add' : 'Agregar'}
               </button>
@@ -480,7 +480,7 @@ function addQuoteToCart(): void {
   const customItem: CartItem = {
     id: `custom-${Date.now()}`,
     name: { en: `Custom Prescription - ${frameStyle}`, es: `Formula Personalizada - ${frameStyle}` },
-    brand: 'LookatMe Custom',
+    brand: 'FAN Opticas Custom',
     category: 'prescription',
     price,
     image: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=400&h=400&fit=crop',
@@ -622,7 +622,7 @@ async function handleMetaMaskPayment(): Promise<void> {
 
   const chainId = (await provider.request({ method: 'eth_chainId' })) as string;
   const total = getCartTotal();
-  const message = `LookatMe purchase of ${formatCop(total)} COP`;
+  const message = `FAN Opticas purchase of ${formatCop(total)} COP`;
 
   try {
     await provider.request({ method: 'personal_sign', params: [message, account] });
@@ -643,7 +643,7 @@ async function handleLightningPayment(): Promise<void> {
   const webln = window.webln;
   if (webln) {
     await webln.enable();
-    const invoice = await webln.makeInvoice({ amount: sats, defaultMemo: 'LookatMe Order' });
+    const invoice = await webln.makeInvoice({ amount: sats, defaultMemo: 'FAN Opticas Order' });
     const paymentRequest = invoice.paymentRequest || invoice.pr;
     if (paymentRequest) {
       await copyToClipboard(paymentRequest);
@@ -655,7 +655,7 @@ async function handleLightningPayment(): Promise<void> {
   } else {
     const lightningUrl = `lightning:${LIGHTNING_ADDRESS}`;
     await copyToClipboard(lightningUrl);
-    showNotification(state.currentLang === 'en' ? 'Lightning address copied. Pay from your wallet.' : 'Direccion Lightning copiada. Paga desde tu wallet.');
+    showNotification(state.currentLang === 'en' ? 'Lightning address copied. Pay from your walet.' : 'Direccion Lightning copiada. Paga desde tu wallet.');
   }
 }
 
@@ -848,7 +848,7 @@ function renderAccountUI(): void {
   const greeting = qs<HTMLElement>('#accountGreeting');
   const email = qs<HTMLElement>('#accountEmail');
 
-  if (greeting) greeting.textContent = state.currentUser.profile.fullName || 'LookatMe User';
+  if (greeting) greeting.textContent = state.currentUser.profile.fullName || 'FAN Opticas User';
   if (email) email.textContent = state.currentUser.email;
 
   fillProfileForm();
