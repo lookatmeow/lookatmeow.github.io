@@ -142,16 +142,26 @@
     
     <!-- Navigation Menu Toggle Script -->
     <script>
-        document.getElementById('navMenuToggle').addEventListener('click', function() {
-            const menu = document.getElementById('navMenu');
-            menu.classList.toggle('hidden');
+        const navToggle = document.getElementById('navMenuToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        navToggle.addEventListener('click', function(event) {
+            navMenu.classList.toggle('hidden');
+            event.stopPropagation();
         });
-        
+
         // Close menu when a link is clicked
         document.querySelectorAll('#navMenu a').forEach(link => {
             link.addEventListener('click', function() {
-                document.getElementById('navMenu').classList.add('hidden');
+                navMenu.classList.add('hidden');
             });
+        });
+
+        // Close menu when clicking outside the nav area
+        document.addEventListener('click', function(event) {
+            if (!navMenu.classList.contains('hidden') && !event.target.closest('nav')) {
+                navMenu.classList.add('hidden');
+            }
         });
     </script>
 
@@ -728,7 +738,7 @@
                     <ul class="space-y-2 text-gray-600 dark:text-gray-400">
                         <li><i class="fas fa-phone mr-2"></i>+57 3012647262</li>
                         <li><i class="fas fa-envelope mr-2"></i>lookatme@gmail.com</li>
-                        <li><i class="fas fa-map-marker-alt mr-2"></i>Centro Comercial Unicompras Calle 17, 8-68, Bogotá, Colombia, Colombia</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i>Centro Comercial Veracruz pasaje comercial CALLE 16 No.8 A - 33 CALLE 15, No.8 A - 50 local 147 Bogotá, Colombia</li>
                     </ul>
                 </div>
                 

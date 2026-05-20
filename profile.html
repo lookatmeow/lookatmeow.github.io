@@ -75,16 +75,26 @@
   
   <!-- Navigation Menu Toggle Script -->
   <script>
-    document.getElementById('navMenuToggle').addEventListener('click', function() {
-      const menu = document.getElementById('navMenu');
-      menu.classList.toggle('hidden');
+    const navToggle = document.getElementById('navMenuToggle');
+    const navMenu = document.getElementById('navMenu');
+
+    navToggle.addEventListener('click', function(event) {
+      navMenu.classList.toggle('hidden');
+      event.stopPropagation();
     });
-    
+
     // Close menu when a link is clicked
     document.querySelectorAll('#navMenu a').forEach(link => {
       link.addEventListener('click', function() {
-        document.getElementById('navMenu').classList.add('hidden');
+        navMenu.classList.add('hidden');
       });
+    });
+
+    // Close menu when clicking outside the nav area
+    document.addEventListener('click', function(event) {
+      if (!navMenu.classList.contains('hidden') && !event.target.closest('nav')) {
+        navMenu.classList.add('hidden');
+      }
     });
   </script>
 
